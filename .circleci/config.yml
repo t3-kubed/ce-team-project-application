@@ -6,7 +6,7 @@ workflows:
   build-docker-image-only:
     jobs:
       - docker/publish:
-          deploy: false
+          #deploy: false
           path: ./backend-app
           docker-context: ./backend-app
           image: richforrester/test
