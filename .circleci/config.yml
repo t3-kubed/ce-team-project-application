@@ -11,6 +11,7 @@ workflows:
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: ${CIRCLE_BUILD_NUM}
           update-description: true
+          working_directory: ./backend-app
 
   # build-docker-image-only-with-buildkit:
   #   jobs:
