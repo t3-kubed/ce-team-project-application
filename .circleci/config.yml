@@ -21,4 +21,6 @@ workflows:
           tag: ${CIRCLE_BUILD_NUM}
           public-registry-alias: y3a7y2o1
           public-registry: true
+          requires:
+            - build-docker-image-only
           
