@@ -2,10 +2,39 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@8.2.1
 
-workflows:
-  build_and_push_image:
-    jobs:
+jobs:
+  build-image-and-push-backend:
+    working_directory: ~/backend-app
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - checkout
+      - setup_remote_docker
       - aws-ecr/build-and-push-image:
-          path: backend-app
-          repo: foz-repo-01
+          repo: ${AWS_ECR_REPO_NAME}
+          path: "backend-app"
+          build-path: "backend-app"
           tag: backend-app
+          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+          public-registry: true
+
+  build-image-and-push-frontend:
+    working_directory: ~/frontend-app
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - checkout
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: ${AWS_ECR_REPO_NAME}
+          path: "frontend-app"
+          build-path: "frontend-app"
+          tag: frontend-app
+          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+          public-registry: true
+          
+workflows:
+  application-build-and-push:
+    jobs:
+      - build-image-and-push-backend
+      - build-image-and-push-frontend
