@@ -11,5 +11,15 @@ workflows:
           path: ./backend-app
           docker-context: ./backend-app
           image: richforrester/test
-          tag: backend-app   
-      
+          tag: backend-app
+
+  build-image-and-push:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          repo: foz-repo-01
+          path: ./backend-app
+          build-path: ./backend-app
+          tag: ${CIRCLE_BUILD_NUM}
+          public-registry-alias: y3a7y2o1
+          public-registry: true
+          
