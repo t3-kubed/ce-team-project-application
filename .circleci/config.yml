@@ -11,5 +11,5 @@ workflows:
           path: "backend-app"
           push-image: true
           repo: "foz-repo-01"
-          public-registry-alias: "y3a7y2o1"
+          public-registry-alias: "647473782560"
           tag: backend-app
