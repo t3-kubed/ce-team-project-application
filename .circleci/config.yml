@@ -8,6 +8,5 @@ workflows:
     jobs:
       - aws-ecr/build-and-push-image:
           path: "frontend-app"
-          build-path: "frontend-app"
           repo: "foz-repo-01"
           tag: "test"
