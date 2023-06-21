@@ -8,6 +8,7 @@ jobs:
     docker:
       - image: cimg/aws:2023.05
     steps:
+      - checkout
       - setup_remote_docker # Ensures that we can issue docker build commands
       - aws-ecr/build-and-push-image:
           repo: foz-repo-01
