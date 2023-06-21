@@ -10,9 +10,7 @@ workflows:
           path: ./backend-app
           docker-context: ./backend-app
           image: richforrester/test
-          tag: backend-app
-          update-description: true
-    
+          tag: backend-app    
 
   # build-docker-image-only-with-buildkit:
   #   jobs:
