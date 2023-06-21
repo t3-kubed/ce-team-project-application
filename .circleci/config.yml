@@ -10,8 +10,8 @@ workflows:
           path: ./backend-app
           docker-context: ./backend-app
           image: richforrester/test
-          # tag: ${CIRCLE_BUILD_NUM}
-          # update-description: true
+          tag: ${CIRCLE_BUILD_NUM}
+          update-description: true
     
 
   # build-docker-image-only-with-buildkit:
