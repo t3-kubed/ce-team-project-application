@@ -8,11 +8,10 @@ workflows:
       - docker/publish:
           deploy: false
           path: ./backend-app
-          build-path: ./backend-app
-          #docker-context: ./backend-app
-          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-          tag: ${CIRCLE_BUILD_NUM}
-          update-description: true
+          docker-context: ./backend-app
+          # image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          # tag: ${CIRCLE_BUILD_NUM}
+          # update-description: true
     
 
   # build-docker-image-only-with-buildkit:
