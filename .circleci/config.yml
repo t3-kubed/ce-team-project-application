@@ -9,7 +9,7 @@ workflows:
           deploy: false
           path: ./backend-app
           docker-context: ./backend-app
-          # image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+          image: richforrester/test
           # tag: ${CIRCLE_BUILD_NUM}
           # update-description: true
     
