@@ -3,7 +3,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@8.2.1
 
 jobs:
-  build-image-and-push:
+  build-image-and-push-backend:
     working_directory: ~/backend-app
     docker:
       - image: cimg/aws:2023.05
@@ -12,14 +12,29 @@ jobs:
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
           repo: foz-repo-01
-          path: "backend-app" # This is the directory to look for the Dockerfile
-          build-path: "backend-app" # This is directory for Docker to load the build path to source code
-          tag: backend-app-${CIRCLE_BUILD_NUM} # This will be automatically replaced with the job number
+          path: "backend-app"
+          build-path: "backend-app"
+          tag: backend-app
+          public-registry-alias: y3a7y2o1
+          public-registry: true
+
+  build-image-and-push-frontend:
+    working_directory: ~/frontend-app
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - checkout
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: foz-repo-01
+          path: "frontend-app"
+          build-path: "frontend-app"
+          tag: frontend-app
           public-registry-alias: y3a7y2o1
           public-registry: true
           
 workflows:
-  application-build-and-push: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  application-build-and-push:
     jobs:
-      - build-image-and-push
+      - build-image-and-push-backend
+      - build-image-and-push-frontend
