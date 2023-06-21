@@ -5,9 +5,6 @@ orbs:
 workflows:
   build-docker-image-only:
     jobs:
-      - run:
-          name: Test
-          command: echo ${!PARAM_DOCKER_USERNAME}
       - docker/publish:
           path: ./backend-app
           image: test01/test02
