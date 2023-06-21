@@ -6,7 +6,8 @@ orbs:
 workflows:
   build-docker-image-only:
     jobs:
-      - docker/build:
+      - docker/publish:
+          deploy: false
           path: ./backend-app
           docker-context: ./backend-app
           image: richforrester/test
