@@ -8,7 +8,7 @@ workflows:
       - docker/publish:
           deploy: false
           path: ./backend-app
-          attach-at: ./backend-app
+          docker-context: ./backend-app
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           tag: ${CIRCLE_BUILD_NUM}
           update-description: true
