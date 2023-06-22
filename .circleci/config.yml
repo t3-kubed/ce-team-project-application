@@ -54,6 +54,6 @@ jobs:
 workflows:
   application-build-and-push:
     jobs:
-      - build-and-deploy-backend
+      # - build-and-deploy-backend
       - build-and-deploy-frontend
       
