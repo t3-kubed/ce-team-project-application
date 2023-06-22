@@ -47,9 +47,9 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-file-path: "frontend-app/deployment.yaml"
           resource-name: frontend-app
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "frontend-app/service.yaml"
-          resource-name: frontend-app-service          
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "frontend-app/service.yaml"
+      #     resource-name: frontend-app-service          
           
 workflows:
   application-build-and-push:
