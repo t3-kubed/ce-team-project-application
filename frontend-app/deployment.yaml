@@ -16,5 +16,5 @@ spec:
       - name: frontend-app
         image: frontend-app
         imagePullPolicy: IfNotPresent
-        ports: 
+        ports:
         - containerPort: 5173

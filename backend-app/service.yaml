@@ -7,6 +7,6 @@ spec:
     app: backend-app  
   ports:
     - protocol: TCP
-      port: 2020
-      targetPort: 2020
+      port: 8080
+      targetPort: 8080
   type: LoadBalancer
