@@ -5,7 +5,7 @@ orbs:
   aws-eks: circleci/aws-eks@2.2.0
 
 jobs:
-  build-image-and-push-backend:
+  build-and-deploy-backend:
     working_directory: ~/backend-app
     docker:
       - image: cimg/aws:2023.05
@@ -30,7 +30,7 @@ jobs:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
 
-  build-image-and-push-frontend:
+  build-and-deploy-frontend:
     working_directory: ~/frontend-app
     docker:
       - image: cimg/aws:2023.05
@@ -44,10 +44,16 @@ jobs:
           tag: frontend-app
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/deployment.yaml"
+          resource-name: frontend-app
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/service.yaml"
+          resource-name: frontend-app-service          
           
 workflows:
   application-build-and-push:
     jobs:
-      - build-image-and-push-backend
-      # - build-image-and-push-frontend
+      - build-and-deploy-backend
+      - build-and-deploy-frontend
       
