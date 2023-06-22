@@ -17,4 +17,4 @@ spec:
         image: backend-app
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8080
+        - containerPort: 2020
