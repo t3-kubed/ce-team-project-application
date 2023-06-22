@@ -44,6 +44,10 @@ jobs:
           tag: frontend-app
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "ce-cluster-t3-kubed"
+          install-kubectl: true
+          verbose: true          
       - kubernetes/create-or-update-resource:
           resource-file-path: "frontend-app/deployment.yaml"
           resource-name: frontend-app
