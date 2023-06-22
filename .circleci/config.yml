@@ -5,30 +5,30 @@ orbs:
   aws-eks: circleci/aws-eks@2.2.0
 
 jobs:
-  build-and-deploy-backend:
-    working_directory: ~/backend-app
-    docker:
-      - image: cimg/aws:2023.05
-    steps:
-      - checkout
-      - setup_remote_docker
-      - aws-ecr/build-and-push-image:
-          repo: ${AWS_ECR_REPO_NAME}
-          path: "backend-app"
-          build-path: "backend-app"
-          tag: backend-app
-          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
-          public-registry: true
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: "ce-cluster-t3-kubed"
-          install-kubectl: true
-          verbose: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "backend-app/deployment.yaml"
-          resource-name: backend-app
-      # - kubernetes/create-or-update-resource:
-      #     resource-file-path: "backend-app/service.yaml"
-      #     resource-name: backend-app-service
+  # build-and-deploy-backend:
+  #   working_directory: ~/backend-app
+  #   docker:
+  #     - image: cimg/aws:2023.05
+  #   steps:
+  #     - checkout
+  #     - setup_remote_docker
+  #     - aws-ecr/build-and-push-image:
+  #         repo: ${AWS_ECR_REPO_NAME}
+  #         path: "backend-app"
+  #         build-path: "backend-app"
+  #         tag: backend-app
+  #         public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+  #         public-registry: true
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: "ce-cluster-t3-kubed"
+  #         install-kubectl: true
+  #         verbose: true
+  #     - kubernetes/create-or-update-resource:
+  #         resource-file-path: "backend-app/deployment.yaml"
+  #         resource-name: backend-app
+  #     - kubernetes/create-or-update-resource:
+  #         resource-file-path: "backend-app/service.yaml"
+  #         resource-name: backend-app-service
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
@@ -54,6 +54,6 @@ jobs:
 workflows:
   application-build-and-push:
     jobs:
-      - build-and-deploy-backend
       - build-and-deploy-frontend
+      #- build-and-deploy-backend
       
