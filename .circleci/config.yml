@@ -42,18 +42,6 @@ jobs:
       - image: cimg/aws:2023.05
     steps:
       - checkout
-      - run:
-          command: pwd
-          name: show current directory
-      - run:
-          command: ls -lsah
-          name: list files
-      - run:
-          command: echo "http://a53c7dad2c74442bfa6da5ece15973d6-1316575403.eu-west-2.elb.amazonaws.com:8080"
-          name: echo url
-      - run:
-          command: cat ./frontend-app/.env
-          name: show env contents    
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
           repo: ${AWS_ECR_REPO_NAME}
@@ -82,6 +70,6 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      - build-and-deploy-backend
-      #- build-and-deploy-frontend
+      #- build-and-deploy-backend
+      - build-and-deploy-frontend
       
