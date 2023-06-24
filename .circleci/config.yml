@@ -42,6 +42,9 @@ jobs:
       - image: cimg/aws:2023.05
     steps:
       - checkout
+      - run:
+          command: cat .env
+          name: show env file 
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
           repo: ${AWS_ECR_REPO_NAME}
