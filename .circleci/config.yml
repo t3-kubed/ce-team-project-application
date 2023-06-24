@@ -29,18 +29,6 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
-      - run:
-          command: |
-            kubectl get pods
-          name: Check Pods
-      - run:
-          command: |
-            kubectl get deployments
-          name: Check Deployments
-      - run:
-          command: |
-            kubectl get services
-          name: Check Services
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
@@ -65,12 +53,23 @@ jobs:
           resource-name: frontend-app
       - kubernetes/create-or-update-resource:
           resource-file-path: "frontend-app/service.yaml"
-          resource-name: frontend-app-service          
-          
+          resource-name: frontend-app-service
+      - run:
+          command: sleep 10
+          name: WaitForServices
+      - run:
+          command: kubectl get pods
+          name: Check Pods
+      - run:
+          command: kubectl get deployments
+          name: Check Deployments
+      - run:
+          command: kubectl get services
+          name: Check Services          
+    
 workflows:
   application-build-and-deploy:
     jobs:
       - build-and-deploy-backend
-      # - build-and-deploy-frontend
-      # - trigger deploy
+      - build-and-deploy-frontend
       
