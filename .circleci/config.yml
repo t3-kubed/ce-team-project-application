@@ -11,24 +11,29 @@ jobs:
       - image: cimg/aws:2023.05
     steps:
       - checkout
-      - setup_remote_docker
-      - aws-ecr/build-and-push-image:
-          repo: ${AWS_ECR_REPO_NAME}
-          path: "backend-app"
-          build-path: "backend-app"
-          tag: backend-app
-          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
-          public-registry: true
+      # - setup_remote_docker
+      # - aws-ecr/build-and-push-image:
+      #     repo: ${AWS_ECR_REPO_NAME}
+      #     path: "backend-app"
+      #     build-path: "backend-app"
+      #     tag: backend-app
+      #     public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+      #     public-registry: true
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "ce-cluster-t3-kubed"
           install-kubectl: true
           verbose: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "backend-app/deployment.yaml"
-          resource-name: backend-app
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "backend-app/service.yaml"
-          resource-name: backend-app-service
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "backend-app/deployment.yaml"
+      #     resource-name: backend-app
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "backend-app/service.yaml"
+      #     resource-name: backend-app-service
+      - kubernetes/delete-resource:
+          now: true
+          resource-names: backend-app-service
+          resource-types: services
+          wait: true      
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
@@ -53,23 +58,11 @@ jobs:
           resource-name: frontend-app
       - kubernetes/create-or-update-resource:
           resource-file-path: "frontend-app/service.yaml"
-          resource-name: frontend-app-service
-      - run:
-          command: sleep 10
-          name: WaitForServices
-      - run:
-          command: kubectl get pods
-          name: Check Pods
-      - run:
-          command: kubectl get deployments
-          name: Check Deployments
-      - run:
-          command: kubectl get services
-          name: Check Services          
+          resource-name: frontend-app-service       
     
 workflows:
   application-build-and-deploy:
     jobs:
       - build-and-deploy-backend
-      - build-and-deploy-frontend
+      # - build-and-deploy-frontend
       
