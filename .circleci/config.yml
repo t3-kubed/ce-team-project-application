@@ -33,6 +33,7 @@ jobs:
           now: true
           resource-names: backend-app-service
           resource-types: services
+          ignore-not-found: true
           wait: true      
 
   build-and-deploy-frontend:
