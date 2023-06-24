@@ -48,6 +48,9 @@ jobs:
       - run:
           command: ls -lsah
           name: list files
+      - run:
+          command: cat ./frontend-app/.env
+          name: show env contents    
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
           repo: ${AWS_ECR_REPO_NAME}
