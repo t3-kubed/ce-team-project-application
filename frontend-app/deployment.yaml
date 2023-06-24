@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: frontend-app
+        image: 647473782560.ecr.eu-west-2.amazonaws.com/frontend-app
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5173
