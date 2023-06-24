@@ -54,34 +54,34 @@ jobs:
       - run:
           command: cat ./frontend-app/.env
           name: show env contents    
-      # - setup_remote_docker
-      # - aws-ecr/build-and-push-image:
-      #     repo: ${AWS_ECR_REPO_NAME}
-      #     path: "frontend-app"
-      #     build-path: "frontend-app"
-      #     tag: frontend-app
-      #     public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
-      #     public-registry: true
-      # - aws-eks/update-kubeconfig-with-authenticator:
-      #     cluster-name: "ce-cluster-t3-kubed"
-      #     install-kubectl: true
-      #     verbose: true
-      # - run:
-      #     command: kubectl delete service frontend-app-service --ignore-not-found=true
-      #     name: Delete Serivce          
-      # - run:
-      #     command: kubectl delete deployment frontend-app --ignore-not-found=true
-      #     name: Delete Deplyment                   
-      # - kubernetes/create-or-update-resource:
-      #     resource-file-path: "frontend-app/deployment.yaml"
-      #     resource-name: frontend-app
-      # - kubernetes/create-or-update-resource:
-      #     resource-file-path: "frontend-app/service.yaml"
-      #     resource-name: frontend-app-service       
+      - setup_remote_docker
+      - aws-ecr/build-and-push-image:
+          repo: ${AWS_ECR_REPO_NAME}
+          path: "frontend-app"
+          build-path: "frontend-app"
+          tag: frontend-app
+          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+          public-registry: true
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "ce-cluster-t3-kubed"
+          install-kubectl: true
+          verbose: true
+      - run:
+          command: kubectl delete service frontend-app-service --ignore-not-found=true
+          name: Delete Serivce          
+      - run:
+          command: kubectl delete deployment frontend-app --ignore-not-found=true
+          name: Delete Deplyment                   
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/deployment.yaml"
+          resource-name: frontend-app
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/service.yaml"
+          resource-name: frontend-app-service       
     
 workflows:
   application-build-and-deploy:
     jobs:
-      #- build-and-deploy-backend
-      - build-and-deploy-frontend
+      - build-and-deploy-backend
+      #- build-and-deploy-frontend
       
