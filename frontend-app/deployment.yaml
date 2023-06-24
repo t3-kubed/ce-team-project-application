@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: 647473782560.ecr.eu-west-2.amazonaws.com/frontend-app
+        image: public.ecr.aws/y3a7y2o1/t3-kubed-pub-repo:frontend-app
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5173
