@@ -23,17 +23,20 @@ jobs:
           cluster-name: "ce-cluster-t3-kubed"
           install-kubectl: true
           verbose: true
+      - run:
+          command: kubectl delete service backend-app-service --ignore-not-found=true
+          name: WaitForServices          
       # - kubernetes/create-or-update-resource:
       #     resource-file-path: "backend-app/deployment.yaml"
       #     resource-name: backend-app
       # - kubernetes/create-or-update-resource:
       #     resource-file-path: "backend-app/service.yaml"
       #     resource-name: backend-app-service
-      - kubernetes/delete-resource:
-          now: true
-          resource-names: backend-app-service
-          resource-types: services
-          wait: true      
+      # - kubernetes/delete-resource:
+      #     now: true
+      #     resource-names: backend-app-service
+      #     resource-types: services
+      #     wait: true      
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
