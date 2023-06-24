@@ -43,8 +43,11 @@ jobs:
     steps:
       - checkout
       - run:
-          command: cat .env
-          name: show env file 
+          command: pwd
+          name: show current directory
+      - run:
+          command: ls -lsah
+          name: list files
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
           repo: ${AWS_ECR_REPO_NAME}
