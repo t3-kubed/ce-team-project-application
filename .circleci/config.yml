@@ -16,7 +16,8 @@ jobs:
           repo: ${AWS_ECR_REPO_NAME}
           path: "backend-app"
           build-path: "backend-app"
-          tag: backend-app-${CIRCLE_BUILD_NUM}
+          tag: backend-app
+          #tag: backend-app-${CIRCLE_BUILD_NUM}
           #tag: ${CIRCLE_BUILD_NUM}
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
@@ -26,17 +27,26 @@ jobs:
           install-kubectl: true
           verbose: true
       - run:
+          command: kubectl delete service frontend-app-service --ignore-not-found=true
+          name: Delete Frontend Serivce          
+      - run:
+          command: kubectl delete deployment frontend-app --ignore-not-found=true
+          name: Delete Frontend Deplyment
+      - run:
           command: kubectl delete service backend-app-service --ignore-not-found=true
-          name: Delete Serivce          
+          name: Delete Backend Serivce          
       - run:
           command: kubectl delete deployment backend-app --ignore-not-found=true
-          name: Delete Deplyment          
+          name: Delete Backend Deplyment               
       - run:
-          command: sed -i "s/######/$CIRCLE_BUILD_NUM/g" ./backend-app/deployment.yaml
-          name: sed
-      - run:
-          command: cat ./backend-app/deployment.yaml
-          name: show file
+          command: sleep 10
+          name: Sleep   
+      # - run:
+      #     command: sed -i "s/######/$CIRCLE_BUILD_NUM/g" ./backend-app/deployment.yaml
+      #     name: sed
+      # - run:
+      #     command: cat ./backend-app/deployment.yaml
+      #     name: show file
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
           resource-name: backend-app
@@ -45,6 +55,8 @@ jobs:
           resource-name: backend-app-service
 
   build-and-deploy-frontend:
+    # requires:
+    #   - build-and-deploy-backend
     working_directory: ~/frontend-app
     docker:
       - image: cimg/aws:2023.05
