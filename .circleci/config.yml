@@ -43,7 +43,7 @@ jobs:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
       - run:
-          command: kubectl get services | grep 'backend-app-service'
+          command: kubectl get services | grep 'backend-app-service' | awk '{print $1}' | xargs kubectl delete
           name: Delete Service
       - run:
           command: kubectl get services
