@@ -59,11 +59,11 @@ jobs:
           install-kubectl: true
           verbose: true
       - run:
-          command: kubectl delete service frontend-app-service --ignore-not-found=true
-          name: Delete Serivce          
+          command: kubectl get services | grep 'frontend-app-service' | awk '{print $1}' | xargs kubectl delete service --ignore-not-found=true 2>&1 || true
+          name: Delete frontend-app-service
       - run:
-          command: kubectl delete deployment frontend-app --ignore-not-found=true
-          name: Delete Deplyment                   
+          command: kubectl get deployments | grep 'frontend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>&1 || true
+          name: Delete frontend-app                 
       - kubernetes/create-or-update-resource:
           resource-file-path: "frontend-app/deployment.yaml"
           resource-name: frontend-app
@@ -74,6 +74,6 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      - build-and-deploy-backend
-      #- build-and-deploy-frontend
+      #- build-and-deploy-backend
+      - build-and-deploy-frontend
       
