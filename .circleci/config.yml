@@ -72,6 +72,6 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      #- build-and-deploy-backend
-      - build-and-deploy-frontend
+      - build-and-deploy-backend
+      #- build-and-deploy-frontend
       
