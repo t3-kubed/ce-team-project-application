@@ -46,14 +46,14 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - aws-ecr/build-and-push-image:
-          repo: ${AWS_ECR_REPO_NAME}
-          path: "frontend-app"
-          build-path: "frontend-app"
-          tag: frontend-app
-          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
-          public-registry: true
-          skip-when-tags-exist: false
+      # - aws-ecr/build-and-push-image:
+      #     repo: ${AWS_ECR_REPO_NAME}
+      #     path: "frontend-app"
+      #     build-path: "frontend-app"
+      #     tag: frontend-app
+      #     public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+      #     public-registry: true
+      #     skip-when-tags-exist: false
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "ce-cluster-t3-kubed"
           install-kubectl: true
@@ -64,14 +64,14 @@ jobs:
       - run:
           command: kubectl get deployments | grep 'frontend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>&1 || true
           name: Delete frontend-app                 
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "frontend-app/deployment.yaml"
-          resource-name: frontend-app
-          envsubst: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "frontend-app/service.yaml"
-          resource-name: frontend-app-service
-          envsubst: true
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "frontend-app/deployment.yaml"
+      #     resource-name: frontend-app
+      #     envsubst: true
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "frontend-app/service.yaml"
+      #     resource-name: frontend-app-service
+      #     envsubst: true
 
 workflows:
   application-build-and-deploy:
