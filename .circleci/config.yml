@@ -47,7 +47,7 @@ jobs:
           repo: ${AWS_ECR_REPO_NAME}
           path: "frontend-app"
           build-path: "frontend-app"
-          tag: ${CIRCLE_BUILD_NUM}
+          tag: frontend-app-${CIRCLE_BUILD_NUM}
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
       - aws-eks/update-kubeconfig-with-authenticator:
