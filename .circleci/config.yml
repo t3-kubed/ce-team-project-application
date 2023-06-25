@@ -48,9 +48,10 @@ jobs:
           repo: ${AWS_ECR_REPO_NAME}
           path: "frontend-app"
           build-path: "frontend-app"
-          tag: frontend-app=${CIRCLE_BUILD_NUM}
+          tag: frontend-app
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
+          skip-when-tags-exist: false
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "ce-cluster-t3-kubed"
           install-kubectl: true
@@ -71,6 +72,6 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      - build-and-deploy-backend
-      #- build-and-deploy-frontend
+      #- build-and-deploy-backend
+      - build-and-deploy-frontend
       
