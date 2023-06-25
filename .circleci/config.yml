@@ -37,7 +37,7 @@ jobs:
           command: kubectl delete deployment backend-app --ignore-not-found=true
           name: Delete Backend Deplyment               
       - run:
-          command: sleep 10
+          command: sleep 30
           name: Sleep   
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
