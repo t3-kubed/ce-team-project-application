@@ -12,12 +12,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          command: sed -i "s/######/$CIRCLE_BUILD_NUM/g" ./backend-app/deployment.yaml
-          name: sed
-      - run:
-          command: cat ./backend-app/deployment.yaml
-          name: show file
       - aws-ecr/build-and-push-image:
           repo: ${AWS_ECR_REPO_NAME}
           path: "backend-app"
@@ -37,6 +31,12 @@ jobs:
       - run:
           command: kubectl delete deployment backend-app --ignore-not-found=true
           name: Delete Deplyment          
+      - run:
+          command: sed -i "s/######/$CIRCLE_BUILD_NUM/g" ./backend-app/deployment.yaml
+          name: sed
+      - run:
+          command: cat ./backend-app/deployment.yaml
+          name: show file
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
           resource-name: backend-app
