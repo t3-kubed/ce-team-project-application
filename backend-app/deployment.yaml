@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-app
+  name: backend-app-${CIRCLE_BUILD_NUM}
 spec:
   replicas: 2
   selector:
