@@ -64,14 +64,14 @@ jobs:
       - run:
           command: kubectl get deployments | grep 'frontend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>&1 || true
           name: Delete frontend-app                 
-      # - kubernetes/create-or-update-resource:
-      #     resource-file-path: "frontend-app/deployment.yaml"
-      #     resource-name: frontend-app
-      #     envsubst: true
-      # - kubernetes/create-or-update-resource:
-      #     resource-file-path: "frontend-app/service.yaml"
-      #     resource-name: frontend-app-service
-      #     envsubst: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/deployment.yaml"
+          resource-name: frontend-app
+          envsubst: true
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "frontend-app/service.yaml"
+          resource-name: frontend-app-service
+          envsubst: true
 
 workflows:
   application-build-and-deploy:
