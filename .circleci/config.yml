@@ -13,10 +13,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - aws-ecr/build-and-push-image:
-          repo: ${AWS_ECR_REPO_NAME}
+          repo: ${AWS_ECR_REPO_NAME_BACK}
           path: "backend-app"
           build-path: "backend-app"
-          tag: backend-app
+          tag: ${CIRCLE_BUILD_NUM}
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
           skip-when-tags-exist: false
