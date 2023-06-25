@@ -45,10 +45,11 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
+      - run:
+          command: kubectl get services
+          name: Get services            
 
   build-and-deploy-frontend:
-    requires:
-       - build-and-deploy-backend
     working_directory: ~/frontend-app
     docker:
       - image: cimg/aws:2023.05
@@ -84,5 +85,5 @@ workflows:
   application-build-and-deploy:
     jobs:
       - build-and-deploy-backend
-      - build-and-deploy-frontend
+#      - build-and-deploy-frontend
       
