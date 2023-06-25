@@ -12,33 +12,30 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - aws-ecr/build-and-push-image:
-          repo: ${AWS_ECR_REPO_NAME}
-          path: "backend-app"
-          build-path: "backend-app"
-          tag: backend-app
-          public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
-          public-registry: true
-          skip-when-tags-exist: false
+      # - aws-ecr/build-and-push-image:
+      #     repo: ${AWS_ECR_REPO_NAME}
+      #     path: "backend-app"
+      #     build-path: "backend-app"
+      #     tag: backend-app
+      #     public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
+      #     public-registry: true
+      #     skip-when-tags-exist: false
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: "ce-cluster-t3-kubed"
           install-kubectl: true
           verbose: true
-      - run:
-          command: kubectl delete service frontend-app-service --ignore-not-found=true
-          name: Delete Frontend Serivce          
-      - run:
-          command: kubectl delete deployment frontend-app --ignore-not-found=true
-          name: Delete Frontend Deplyment
+      # - run:
+      #     command: kubectl delete service frontend-app-service --ignore-not-found=true
+      #     name: Delete Frontend Serivce          
+      # - run:
+      #     command: kubectl delete deployment frontend-app --ignore-not-found=true
+      #     name: Delete Frontend Deplyment
       - run:
           command: kubectl delete service backend-app-service --ignore-not-found=true
           name: Delete Backend Serivce          
       - run:
           command: kubectl delete deployment backend-app --ignore-not-found=true
           name: Delete Backend Deplyment               
-      # - run:
-      #     command: sleep 30
-      #     name: Sleep   
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
           resource-name: backend-app
@@ -46,7 +43,7 @@ jobs:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
       - run:
-          command: kubectl get services | grep 'backend-app-service' | xargs kubectl delete
+          command: kubectl get services | grep 'backend-app-service'
           name: Delete Service
       - run:
           command: kubectl get services
