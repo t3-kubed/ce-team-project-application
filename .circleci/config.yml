@@ -13,8 +13,8 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: envsubst '${CIRCLE_BUILD_NUM}' < ./backend-app/deployment.yaml
-          name: test
+          command: sed -i "s/######/$CIRCLE_BUILD_NUM/g" ./backend-app/deployment.yaml
+          name: sed
       - run:
           command: cat ./backend-app/deployment.yaml
           name: show file
