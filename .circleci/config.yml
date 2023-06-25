@@ -25,10 +25,10 @@ jobs:
           install-kubectl: true
           verbose: true
       - run:
-          command: kubectl get services | grep 'backend-app-service' | awk '{print $1}' | xargs kubectl delete service --ignore-not-found=true
+          command: kubectl get services | grep 'backend-app-service' | awk '{print $1}' | xargs kubectl delete service --ignore-not-found=true 2>/dev/null
           name: Delete backend-app-service
       - run:
-          command: kubectl get deployments | grep 'backend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true
+          command: kubectl get deployments | grep 'backend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>/dev/null
           name: Delete backend-app
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
