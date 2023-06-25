@@ -73,9 +73,34 @@ jobs:
           resource-name: frontend-app-service
           envsubst: true
 
+  cleardown-services-and-deployments:
+    working_directory: ~/frontend-app
+    docker:
+      - image: cimg/aws:2023.05
+    steps:
+      - checkout
+      - setup_remote_docker
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: "ce-cluster-t3-kubed"
+          install-kubectl: true
+          verbose: true
+      - run:
+          command: kubectl get services | grep 'frontend-app-service' | awk '{print $1}' | xargs kubectl delete service --ignore-not-found=true 2>&1 || true
+          name: Delete frontend-app-service
+      - run:
+          command: kubectl get deployments | grep 'frontend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>&1 || true
+          name: Delete frontend-app
+      - run:
+          command: kubectl get services | grep 'backend-app-service' | awk '{print $1}' | xargs kubectl delete service --ignore-not-found=true 2>&1 || true
+          name: Delete backend-app-service
+      - run:
+          command: kubectl get deployments | grep 'backend-app' | awk '{print $1}' | xargs kubectl delete deployment --ignore-not-found=true 2>&1 || true
+          name: Delete backend-app                         
+
 workflows:
   application-build-and-deploy:
     jobs:
+      - cleardown-services-and-deployments
       #- build-and-deploy-backend
-      - build-and-deploy-frontend
+      #- build-and-deploy-frontend
       
