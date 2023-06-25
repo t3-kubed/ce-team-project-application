@@ -16,7 +16,8 @@ jobs:
           repo: ${AWS_ECR_REPO_NAME}
           path: "backend-app"
           build-path: "backend-app"
-          tag: ${CIRCLE_BUILD_NUM}
+          tag: latest
+          #tag: ${CIRCLE_BUILD_NUM}
           public-registry-alias: ${AWS_ECR_PUBLIC_ALIAS}
           public-registry: true
           skip-when-tags-exist: false
@@ -98,7 +99,7 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      - build-and-deploy-backend
+      #- build-and-deploy-backend
       #- build-and-deploy-frontend
-      #- clear-services-only
+      - clear-services-only
       
