@@ -98,7 +98,7 @@ jobs:
 workflows:
   application-build-and-deploy:
     jobs:
-      #- build-and-deploy-backend
+      - build-and-deploy-backend
       #- build-and-deploy-frontend
-      - clear-services-only
+      #- clear-services-only
       
