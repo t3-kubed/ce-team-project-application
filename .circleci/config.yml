@@ -36,9 +36,9 @@ jobs:
       - run:
           command: kubectl delete deployment backend-app --ignore-not-found=true
           name: Delete Backend Deplyment               
-      - run:
-          command: sleep 30
-          name: Sleep   
+      # - run:
+      #     command: sleep 30
+      #     name: Sleep   
       - kubernetes/create-or-update-resource:
           resource-file-path: "backend-app/deployment.yaml"
           resource-name: backend-app
@@ -46,11 +46,11 @@ jobs:
           resource-file-path: "backend-app/service.yaml"
           resource-name: backend-app-service
       - run:
+          command: kubectl get services | grep 'backend-app-service' | xargs kubctl delete
+          name: Delete Service
+      - run:
           command: kubectl get services
           name: Get services
-      - run:
-          command: kubectl describe service backend-app-service
-          name: Get service lb name
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
