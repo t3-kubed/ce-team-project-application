@@ -49,7 +49,7 @@ jobs:
           command: kubectl get services
           name: Get services
       - run:
-          command: kubectl get svc backend-app-service -o json | jq -r .status.loadBalancer.ingress[].hostname
+          command: kubectl get svc backend-app-service -o json
           name: Get service lb name
 
   build-and-deploy-frontend:
