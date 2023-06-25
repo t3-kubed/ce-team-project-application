@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: backend-app
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend-app
-        image: public.ecr.aws/y3a7y2o1/t3-kubed-pub-repo:latest
+        image: public.ecr.aws/y3a7y2o1/t3-kubed-pub-repo:backend-app
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
