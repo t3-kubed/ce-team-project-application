@@ -47,7 +47,10 @@ jobs:
           resource-name: backend-app-service
       - run:
           command: kubectl get services
-          name: Get services            
+          name: Get services
+      - run:
+          command: kubectl get svc backend-app-service -o json | jq -r .status.loadBalancer.ingress[].hostname
+          name: Get service lb name
 
   build-and-deploy-frontend:
     working_directory: ~/frontend-app
