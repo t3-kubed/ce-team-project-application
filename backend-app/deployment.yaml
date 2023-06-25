@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend-app
-        image: public.ecr.aws/y3a7y2o1/t3-kubed-pub-repo-backend:latest
+        image: public.ecr.aws/y3a7y2o1/t3-kubed-pub-repo:backend-app
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
