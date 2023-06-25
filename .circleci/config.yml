@@ -13,8 +13,11 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: sed
+          command: envsubst '${CIRCLE_BUILD_NUM}' < ./backend-app/deployment.yaml
           name: test
+      - run:
+          command: cat ./backend-app/deployment.yaml
+          name: show file
       # - aws-ecr/build-and-push-image:
       #     repo: ${AWS_ECR_REPO_NAME}
       #     path: "backend-app"
