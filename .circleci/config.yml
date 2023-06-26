@@ -101,6 +101,6 @@ workflows:
   application-build-and-deploy:
     jobs:
       #- cleardown-services-and-deployments
-      - build-and-deploy-backend
-      #- build-and-deploy-frontend
+      #- build-and-deploy-backend
+      - build-and-deploy-frontend
       
